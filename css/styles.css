@@ -1,0 +1,620 @@
+:root {
+    /* Define global CSS variables for colors and gradients to ensure consistency and easy theme management across themes. */
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --dark-bg: #1a1a2e;
+    --dark-card: #16213e;
+    --dark-text: #eee;
+    --light-bg: #f5f7fa;
+    --light-card: #ffffff;
+    --light-text: #333;
+}
+
+body {
+    min-height: 100vh;
+    /* Smooth transition for theme changes (background and text color) to provide a better user experience. */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark theme styles, activated by `data-theme="dark"` attribute on the body. */
+body[data-theme="dark"] {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+/* Light theme styles, activated by `data-theme="light"` attribute on the body. */
+body[data-theme="light"] {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+}
+
+body[data-theme="dark"] .navbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+body[data-theme="dark"] .card {
+    background-color: var(--dark-card);
+    border-color: #2d3561;
+    color: var(--dark-text);
+}
+body[data-theme="dark"] .notes-list li {
+     color: var(--dark-text);}
+/* Specific dark theme adjustments for empty state elements, ensuring readability against a dark background. */
+body.dark-theme .empty-state .text-muted,
+body.dark-theme .empty-state h3,
+body.dark-theme .empty-state p {
+    color: rgba(255,255,255,0.85) !important;
+}
+body.dark-theme .empty-state .bi-inbox {
+    opacity: 0.85 !important;
+}
+body[data-theme="dark"] .form-control,
+body[data-theme="dark"] .form-select {
+    background-color: #0f3460;
+    border-color: #2d3561;
+    color: var(--dark-text);
+}
+
+/* Focus state for form elements in dark theme, providing clear visual feedback. */
+body[data-theme="dark"] .form-control:focus,
+body[data-theme="dark"] .form-select:focus {
+    background-color: #0f3460;
+    border-color: #667eea;
+    color: var(--dark-text);
+}
+
+body[data-theme="light"] .navbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+body[data-theme="light"] .card {
+    background-color: var(--light-card);
+    border-color: #e1e8ed;
+}
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+/* Base style for sections that can be dynamically shown/hidden. */
+.view-section {
+    display: none;
+}
+
+/* Active state for view sections, revealing them with a fade-in animation. */
+.view-section.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Keyframe animation for a smooth fade-in effect, coupled with a slight upward translation for dynamic content. */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Interactive card style with hover effects for visual feedback. */
+.capsule-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+/* Elevates the card and adds a shadow on hover, indicating interactivity. */
+.capsule-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+.content-badges .badge {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Container for the 3D flashcard effect, establishing the perspective for depth perception. */
+.flashcard-wrapper {
+    perspective: 1000px;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+/* The flashcard element itself, enabling 3D transformations for the flip effect. */
+.flashcard {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    transition: transform 0.6s;
+    transform-style: preserve-3d; /* Ensures child elements are positioned in 3D space. */
+    cursor: pointer;
+}
+
+/* State for when the flashcard is flipped, rotating it 180 degrees on the Y-axis. */
+.flashcard.flipped {
+    transform: rotateY(180deg);
+}
+
+/* Inner container for flashcard faces, crucial for maintaining 3D context during the flip animation. */
+.flashcard-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+/* Common styles for both front and back faces of the flashcard. */
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hides the back of the element when facing away from the user. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+/* Dark theme specific styles for the front face of the flashcard. */
+body[data-theme="dark"] .flashcard-front {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* Dark theme specific styles for the back face of the flashcard, initially rotated to be visible after flip. */
+body[data-theme="dark"] .flashcard-back {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+/* Light theme specific styles for the front face of the flashcard. */
+body[data-theme="light"] .flashcard-front {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* Light theme specific styles for the back face of the flashcard, initially rotated to be visible after flip. */
+body[data-theme="light"] .flashcard-back {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.flashcard-front p,
+.flashcard-back p {
+    margin: 0;
+    font-weight: 500;
+}
+/* Basic styling for ordered notes lists. */
+.notes-list {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+}
+
+.notes-list li {
+    padding: 0.75rem 0;
+    /* Sets a subtle bottom border for list items in dark theme. */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    line-height: 1.6;
+}
+
+/* Overrides the list item border for light theme to ensure visibility. */
+body[data-theme="light"] .notes-list li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Removes the bottom border from the last list item for a cleaner look. */
+.notes-list li:last-child {
+    border-bottom: none;
+}
+
+/* Styling for individual quiz choices, including interactive hover effects. */
+.quiz-choice {
+    padding: 1rem;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+/* Hover effect for interactive quiz choices, providing subtle feedback. */
+.quiz-choice:hover:not(:disabled) {
+    transform: translateX(5px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
+}
+/* Visual indicator for disabled quiz choices, preventing interaction. */
+.quiz-choice:disabled {
+    cursor: not-allowed;
+}
+
+/* Applies a slide-in animation to dynamic content sections like flashcard rows and question blocks. */
+.flashcard-row,
+.question-block {
+    animation: slideIn 0.3s ease;
+}
+
+/* Keyframe animation for a smooth slide-in effect from the left. */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.btn {
+    transition: all 0.2s ease;
+}
+
+/* Hover effect for buttons, providing subtle feedback. */
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Active state for buttons, resetting the transform for a press-down effect. */
+.btn:active {
+    transform: translateY(0);
+}
+
+.card-header {
+    font-weight: 600;
+}
+
+/* Dark theme specific styling for card headers. */
+body[data-theme="dark"] .card-header {
+    background-color: rgba(102, 126, 234, 0.1);
+    border-bottom-color: #2d3561;
+}
+/* Light theme specific styling for card headers. */
+body[data-theme="light"] .card-header {
+    background-color: rgba(102, 126, 234, 0.05);
+    border-bottom-color: #e1e8ed;
+}
+
+/* Default background for progress bars, adapted for dark theme. */
+.progress {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Light theme specific background for progress bars. */
+body[data-theme="light"] .progress {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Animation for empty state messages, ensuring they appear smoothly. */
+.empty-state {
+    animation: fadeIn 0.5s ease;
+}
+
+/* Base styles for navigation tabs, removing default borders and colors. */
+.nav-tabs .nav-link {
+    color: inherit;
+    border: none;
+    border-bottom: 3px solid transparent;
+}
+
+/* Active state for navigation tab links, highlighting the selected tab with an underline. */
+.nav-tabs .nav-link.active {
+    background-color: transparent;
+    border-bottom-color: #667eea;
+    font-weight: 600;
+}
+
+/* Dark theme border color for the nav tabs container. */
+body[data-theme="dark"] .nav-tabs {
+    border-bottom-color: #2d3561;
+}
+
+/* Light theme border color for the nav tabs container. */
+body[data-theme="light"] .nav-tabs {
+    border-bottom-color: #e1e8ed;
+}
+
+.form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.badge {
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+}
+
+/* Responsive adjustments for smaller screens (max-width: 768px). */
+@media (max-width: 768px) {
+    /* Reduces flashcard height for better fit on mobile devices. */
+    .flashcard {
+        height: 300px;
+    }
+    
+    /* Adjusts font size and padding for flashcard faces on smaller screens for improved readability. */
+    .flashcard-front,
+    .flashcard-back {
+        font-size: 1.2rem;
+        padding: 1rem;
+    }
+    
+    /* Modifies button groups to wrap content for better mobile layout. */
+    .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    /* Ensures buttons within a group take up available space evenly on smaller screens. */
+    .btn-group .btn {
+        flex: 1 1 auto;
+    }
+}
+
+/* Standard styling for muted text, reducing its opacity. */
+.text-muted {
+    opacity: 0.7;
+}
+
+/* Dark theme specific styles for info alert messages. */
+body[data-theme="dark"] .alert-info {
+    background-color: rgba(13, 202, 240, 0.2);
+    border-color: rgba(13, 202, 240, 0.3);
+    color: #9ee5f5;
+}
+
+/* Dark theme specific styles for success alert messages. */
+body[data-theme="dark"] .alert-success {
+    background-color: rgba(25, 135, 84, 0.2);
+    border-color: rgba(25, 135, 84, 0.3);
+    color: #a3e6c4;
+}
+
+/* Dark theme specific styles for danger alert messages. */
+body[data-theme="dark"] .alert-danger {
+    background-color: rgba(220, 53, 69, 0.2);
+    border-color: rgba(220, 53, 69, 0.3);
+    color: #f5b7c0;
+}
+
+/* Hides the native file input element, typically replaced by a custom UI for styling consistency. */
+input[type="file"] {
+    display: none;
+}
+
+/* Styling for active button states, providing visual emphasis with a shadow. */
+.btn.active {
+    font-weight: 700;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+}
+/* Dark theme specific styles for input group text add-ons, ensuring theme consistency. */
+body[data-theme="dark"] .input-group-text {
+    background-color: #0f3460;
+    border-color: #2d3561;
+    color: var(--dark-text);
+}
+
+/* Light theme specific styles for input group text add-ons. */
+body[data-theme="light"] .input-group-text {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+    color: var(--light-text);
+}
+
+/* Custom border color for the navbar toggler icon, improving visibility against various backgrounds. */
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Custom SVG background image for the navbar toggler icon, ensuring visibility in dark themes. */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
+
+/* Distinct color for card titles, often used as primary accent. */
+.card-title {
+    color: #667eea;
+    font-weight: 700;
+}
+
+/* Light theme specific color for card titles, providing a slight variation. */
+body[data-theme="light"] .card-title {
+    color: #764ba2;
+}
+/* Ensures high-contrast readable text for dark mode using --dark-text */
+body[data-theme="dark"],
+body.dark-theme {
+    color: var(--dark-text) !important;
+}
+
+/* Generic element coverage */
+body[data-theme="dark"] h1, body.dark-theme h1,
+body[data-theme="dark"] h2, body.dark-theme h2,
+body[data-theme="dark"] h3, body.dark-theme h3,
+body[data-theme="dark"] h4, body.dark-theme h4,
+body[data-theme="dark"] h5, body.dark-theme h5,
+body[data-theme="dark"] h6, body.dark-theme h6,
+body[data-theme="dark"] p, body.dark-theme p,
+body[data-theme="dark"] span, body.dark-theme span,
+body[data-theme="dark"] strong, body.dark-theme strong,
+body[data-theme="dark"] em, body.dark-theme em,
+body[data-theme="dark"] a, body.dark-theme a,
+body[data-theme="dark"] label, body.dark-theme label,
+body[data-theme="dark"] li, body.dark-theme li,
+body[data-theme="dark"] td, body.dark-theme td,
+body[data-theme="dark"] th, body.dark-theme th,
+body[data-theme="dark"] small, body.dark-theme small {
+    color: var(--dark-text) !important;
+}
+
+/* Cards and card sub-elements */
+body[data-theme="dark"] .card,
+body.dark-theme .card,
+body[data-theme="dark"] .card .card-body,
+body.dark-theme .card .card-body,
+body[data-theme="dark"] .card-header,
+body.dark-theme .card-header,
+body[data-theme="dark"] .card-title,
+body.dark-theme .card-title {
+    color: var(--dark-text) !important;
+}
+
+/* Flashcards: front and back faces */
+body[data-theme="dark"] .flashcard-front,
+body.dark-theme .flashcard-front,
+body[data-theme="dark"] .flashcard-back,
+body.dark-theme .flashcard-back {
+    color: var(--dark-text) !important;
+    -webkit-text-fill-color: var(--dark-text) !important; /* iOS/Chromium text fill safety */
+}
+
+/* Notes list items */
+body[data-theme="dark"] .notes-list li,
+body.dark-theme .notes-list li {
+    color: var(--dark-text) !important;
+}
+
+/* Quiz choices and buttons inside quiz */
+body[data-theme="dark"] .quiz-choice,
+body.dark-theme .quiz-choice,
+body[data-theme="dark"] #quiz-choices .btn,
+body.dark-theme #quiz-choices .btn {
+    color: var(--dark-text) !important;
+}
+
+/* Form inputs, selects, textareas and helpers */
+body[data-theme="dark"] .form-control,
+body.dark-theme .form-control,
+body[data-theme="dark"] .form-select,
+body.dark-theme .form-select,
+body[data-theme="dark"] textarea,
+body.dark-theme textarea,
+body[data-theme="dark"] input,
+body.dark-theme input,
+body[data-theme="dark"] .input-group-text,
+body.dark-theme .input-group-text {
+    color: var(--dark-text) !important;
+}
+
+/* Navigation, tabs and badges */
+body[data-theme="dark"] .navbar,
+body.dark-theme .navbar,
+body[data-theme="dark"] .nav-link,
+body.dark-theme .nav-link,
+body[data-theme="dark"] .nav-tabs .nav-link,
+body.dark-theme .nav-tabs .nav-link,
+body[data-theme="dark"] .badge,
+body.dark-theme .badge {
+    color: var(--dark-text) !important;
+}
+
+/* Muted text should still be readable in dark mode */
+body[data-theme="dark"] .text-muted,
+body.dark-theme .text-muted {
+    color: rgba(255,255,255,0.85) !important;
+    opacity: 1 !important;
+}
+
+/* Alerts and feedback blocks */
+body[data-theme="dark"] .alert,
+body.dark-theme .alert,
+body[data-theme="dark"] .alert .alert-heading,
+body.dark-theme .alert .alert-heading {
+    color: var(--dark-text) !important;
+}
+
+/* Lists, ordered/unordered */
+body[data-theme="dark"] ol, body.dark-theme ol,
+body[data-theme="dark"] ul, body.dark-theme ul {
+    color: var(--dark-text) !important;
+}
+
+/* Buttons: ensure text contrast on colored buttons */
+body[data-theme="dark"] .btn,
+body.dark-theme .btn,
+body[data-theme="dark"] .btn * ,
+body.dark-theme .btn * {
+    color: var(--dark-text) !important;
+}
+
+/* Dropdown items, menu text */
+body[data-theme="dark"] .dropdown-item,
+body.dark-theme .dropdown-item {
+    color: var(--dark-text) !important;
+}
+
+/* Table rows and cells */
+body[data-theme="dark"] .table,
+body.dark-theme .table,
+body[data-theme="dark"] .table td,
+body.dark-theme .table td,
+body[data-theme="dark"] .table th,
+body.dark-theme .table th {
+    color: var(--dark-text) !important;
+}
+
+/* Empty state and icon labels */
+body[data-theme="dark"] .empty-state,
+body.dark-theme .empty-state {
+    color: var(--dark-text) !important;
+}
+
+/* Modal content text */
+body[data-theme="dark"] .modal-content,
+body.dark-theme .modal-content,
+body[data-theme="dark"] .modal-body,
+body.dark-theme .modal-body {
+    color: var(--dark-text) !important;
+}
+
+/* Ensure headings inside cards, flashcards and quiz are readable */
+body[data-theme="dark"] .card h5,
+body.dark-theme .card h5,
+body[data-theme="dark"] #quiz-question-text,
+body.dark-theme #quiz-question-text,
+body[data-theme="dark"] #flashcard-front-text,
+body.dark-theme #flashcard-front-text,
+body[data-theme="dark"] #flashcard-back-text,
+body.dark-theme #flashcard-back-text {
+    color: var(--dark-text) !important;
+}
+
+/* Specific strong override for elements previously set to white/transparent */
+body[data-theme="dark"] .bi,
+body.dark-theme .bi {
+    color: var(--dark-text) !important;
+}
+
+/* Final safety: make any remaining visible text inside dark-theme use --dark-text */
+body[data-theme="dark"] *:not(input):not(textarea):not(select) {
+    color: var(--dark-text) !important;
+}
+
+/* Form controls (most important: textarea placeholder & text) */
+body[data-theme="dark"] .form-control,
+body.dark-theme .form-control,
+body[data-theme="dark"] textarea,
+body.dark-theme textarea,
+body[data-theme="dark"] select,
+body.dark-theme select {
+  color: var(--dark-text) !important;
+  background-color: #0f3460 !important;
+  border-color: #2d3561 !important;
+}
+
+/* Placeholder visibility */
+body[data-theme="dark"] ::placeholder,
+body.dark-theme ::placeholder {
+  color: rgba(255,255,255,0.75) !important;
+  opacity: 1 !important;
+}

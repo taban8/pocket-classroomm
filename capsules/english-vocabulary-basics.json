@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "title": "English Vocabulary Basics",
+    "subject": "English",
+    "level": "Beginner",
+    "description": "Simple and useful English words for daily use."
+  },
+  "notes": [
+    "Learning vocabulary helps you improve all English skills.",
+    "Practice new words in sentences to remember them better."
+  ],
+  "flashcards": [
+    {
+      "front": "Beautiful",
+      "back": "Something that is very nice to look at."
+    },
+    {
+      "front": "Quickly",
+      "back": "To do something fast."
+    },
+    {
+      "front": "Delicious",
+      "back": "Tastes very good."
+    },
+    {
+      "front": "Honest",
+      "back": "Always tells the truth."
+    },
+    {
+      "front": "Journey",
+      "back": "Travel from one place to another."
+    }
+  ],
+  "quiz": [
+    {
+      "question": "What does 'honest' mean?",
+      "choices": [
+        "Always tells the truth",
+        "Funny",
+        "Kind",
+        "Strong"
+      ],
+      "correctIndex": 0,
+      "explanation": "An honest person always tells the truth."
+    },
+    {
+      "question": "Which word means 'tastes very good´ ?",
+      "choices": [
+        "Delicious",
+        "Boring",
+        "Slow",
+        "Cold"
+      ],
+      "correctIndex": 0,
+      "explanation": "Delicious means something tastes very good."
+    },
+    {
+      "question": "What is the opposite of Beautiful?",
+      "choices": [
+        "Ugly",
+        "Nice",
+        "Good",
+        "Bad"
+      ],
+      "correctIndex": 0,
+      "explanation": "Ugly is the Opposite of Beautiful."
+    }
+  ],
+  "id": "mh627sfsz5lyb5vnbk",
+  "updatedAt": "2025-10-25T09:15:29.433Z",
+  "schema": "pocket-classroom/v1"
+}

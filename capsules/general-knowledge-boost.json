@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "General Knowledge Boost",
+    "subject": "Geography",
+    "level": "Beginner",
+    "description": "Quick facts to expand your knowledge about the world."
+  },
+  "notes": [
+    "Perfect for general knowledge improvement."
+  ],
+  "flashcards": [
+    {
+      "front": "Mount Everest",
+      "back": "The highest mountain on Earth."
+    },
+    {
+      "front": "The largest ocean in the world",
+      "back": "Pacific Ocean"
+    },
+    {
+      "front": "The Sahara",
+      "back": "The biggest hot desert in the world"
+    },
+    {
+      "front": "Earth’s only natural satellite",
+      "back": "The Moon"
+    }
+  ],
+  "quiz": [
+    {
+      "question": "What is the highest mountain?",
+      "choices": [
+        "Mount Everest",
+        "Himalaya",
+        "Alps",
+        "K2"
+      ],
+      "correctIndex": 0,
+      "explanation": "Mount Everest is the highest mountain."
+    },
+    {
+      "question": "Which ocean is the biggest?",
+      "choices": [
+        "Pacific",
+        "Arctic",
+        "Indian",
+        "Atlantic"
+      ],
+      "correctIndex": 0,
+      "explanation": "Pacific is the biggest ocean."
+    },
+    {
+      "question": "The Sahara is famous for being :",
+      "choices": [
+        "The biggest hot desert",
+        "Small",
+        "Forested",
+        "Cold"
+      ],
+      "correctIndex": 0,
+      "explanation": "The biggest hot desert ."
+    },
+    {
+      "question": "The Moon is:",
+      "choices": [
+        "Earth´s satellite",
+        "A planet",
+        "A cloud",
+        "A star"
+      ],
+      "correctIndex": 0,
+      "explanation": "Earth´s satellite"
+    }
+  ],
+  "id": "mh62yo6h9e4sirp553s",
+  "updatedAt": "2025-10-25T09:31:23.753Z",
+  "schema": "pocket-classroom/v1"
+}

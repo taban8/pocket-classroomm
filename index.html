@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Classroom - Offline Learning Capsules</title>
+    <!-- Bootstrap CSS for styling and responsive layout -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons for iconography -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Favicon, dynamically updated for theme changes by JavaScript -->
+    <link id="favicon" rel="icon" type="image/png" href="favicon-light.png">
+    <!-- Custom application styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Main navigation bar, fixed at the top (sticky) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <!-- Brand logo and name -->
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-book-fill"></i> Pocket Classroom
+            </a>
+            <!-- Toggler button for responsive navigation on small screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Collapsible content for navigation links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Navigation links. 'data-view' attributes control which main content section is displayed. -->
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-view="library" id="nav-library">
+                            <i class="bi bi-grid-3x3-gap"></i> Library
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-view="author" id="nav-author">
+                            <i class="bi bi-pencil-square"></i> Author
+                          </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-view="learn" id="nav-learn">
+                            <i class="bi bi-lightbulb"></i> Learn
+                        </a>
+                    </li>
+                </ul>
+                <!-- Theme toggle button (light/dark mode) -->
+                <button class="btn btn-outline-light btn-sm" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="bi bi-moon-stars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content area of the application -->
+    <main class="container-fluid py-4">
+        <!-- Library View: Displays a collection of learning capsules -->
+        <section id="library-view" class="view-section active">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="bi bi-grid-3x3-gap"></i> My Learning Capsules</h2>
+                <div class="btn-group" role="group">
+                    <!-- Button to create a new learning capsule -->
+                    <button class="btn btn-primary" id="btn-new-capsule">
+                        <i class="bi bi-plus-circle"></i> New Capsule
+                    </button>
+                    <!-- Button to import a capsule from a JSON file -->
+                    <button class="btn btn-outline-primary" id="btn-import">
+                        <i class="bi bi-upload"></i> Import JSON
+                    </button>
+                </div>
+            </div>
+            <!-- Hidden file input, triggered by the 'Import JSON' button -->
+            <input type="file" id="import-file-input" accept=".json" style="display: none;">
+            
+            <!-- Container for displaying learning capsules in a grid format -->
+            <div id="capsules-grid" class="row g-3">
+                <!-- Empty state message and button, displayed when no capsules are present -->
+                <div class="col-12 empty-state">
+                    <div class="text-center py-5">
+                        <i class="bi bi-inbox" style="font-size: 4rem; opacity: 0.3;"></i>
+                        <h3 class="mt-3 text-muted">No capsules yet</h3>
+                        <p class="text-muted">Create your first learning capsule to get started!</p>
+                        <!-- Button to create a new capsule from the empty state -->
+                        <button class="btn btn-primary btn-lg mt-2" id="btn-new-capsule-empty">
+                            <i class="bi bi-plus-circle"></i> Create First Capsule
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Author View: Interface for creating and editing learning capsules -->
+        <section id="author-view" class="view-section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <!-- Title dynamically updates based on whether a new or existing capsule is being edited -->
+                <h2><i class="bi bi-pencil-square"></i> <span id="author-title">New Capsule</span></h2>
+                <div class="btn-group">
+                    <!-- Button to save the current capsule -->
+                    <button class="btn btn-success" id="btn-save-capsule">
+                        <i class="bi bi-save"></i> Save
+                    </button>
+                    <!-- Button to discard changes and return to the library view -->
+                    <button class="btn btn-outline-secondary" id="btn-cancel-author">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card for general capsule information -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5><i class="bi bi-info-circle"></i> Capsule Information</h5>
+                   </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="capsule-title" class="form-label">Title <span class="text-danger">*</span></label>
+                            <!-- Input for capsule title (required field) -->
+                            <input type="text" class="form-control" id="capsule-title" placeholder="Enter capsule title" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="capsule-subject" class="form-label">Subject</label>
+                            <!-- Input for capsule subject (e.g., Math, Science) -->
+                            <input type="text" class="form-control" id="capsule-subject" placeholder="e.g., Math, Science">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="capsule-level" class="form-label">Level</label>
+                            <!-- Dropdown to select the learning level of the capsule -->
+                            <select class="form-select" id="capsule-level">
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                           <label for="capsule-description" class="form-label">Description</label>
+                            <!-- Textarea for a brief description of the capsule -->
+                            <textarea class="form-control" id="capsule-description" rows="2" placeholder="Brief description of this capsule"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card for notes content -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5><i class="bi bi-file-text"></i> Notes</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Textarea for entering multiple notes, typically one per line -->
+                    <textarea class="form-control" id="capsule-notes" rows="6" placeholder="Enter notes (one per line)&#10;Example:&#10;JavaScript is a programming language&#10;Variables store data&#10;Functions are reusable blocks of code"></textarea>
+                </div>
+            </div>
+
+            <!-- Card for flashcards content -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5><i class="bi bi-card-list"></i> Flashcards</h5>
+                    <!-- Button to add new flashcard input fields -->
+                    <button class="btn btn-sm btn-primary" id="btn-add-flashcard">
+                      <i class="bi bi-plus"></i> Add Card
+                    </button>
+                </div>
+                <div class="card-body">
+                    <!-- Container where dynamically added flashcard input forms will be rendered -->
+                    <div id="flashcards-container">
+                        <p class="text-muted">No flashcards yet. Click "Add Card" to create one.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card for quiz questions content -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5><i class="bi bi-question-circle"></i> Quiz Questions</h5>
+                    <!-- Button to add new quiz question input fields -->
+                    <button class="btn btn-sm btn-primary" id="btn-add-question">
+                        <i class="bi bi-plus"></i> Add Question
+                    </button>
+                </div>
+                <div class="card-body">
+                    <!-- Container where dynamically added quiz question input forms will be rendered -->
+                    <div id="quiz-container">
+                        <p class="text-muted">No quiz questions yet. Click "Add Question" to create one.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learn View: Provides tools for studying selected capsules (Notes, Flashcards, Quiz) -->
+        <section id="learn-view" class="view-section">
+            <div class="mb-4">
+                <label for="learn-capsule-select" class="form-label">Select Capsule</label>
+                <!-- Dropdown to select a specific capsule for learning -->
+                <select class="form-select" id="learn-capsule-select">
+                    <option value="">Choose a capsule to study...</option>
+                     </select>
+            </div>
+
+            <!-- Content for learning, displayed only after a capsule is selected from the dropdown -->
+            <div id="learn-content" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <!-- Displays the title of the currently selected capsule -->
+                    <h2 id="learn-capsule-title"></h2>
+                    <!-- Button to export the currently viewed capsule -->
+                    <button class="btn btn-outline-primary" id="btn-export-current">
+                        <i class="bi bi-download"></i> Export
+                    </button>
+                </div>
+
+                <!-- Container for displaying metadata of the selected capsule -->
+                <div id="learn-capsule-meta" class="mb-3"></div>
+
+                <!-- Navigation tabs for switching between Notes, Flashcards, and Quiz modes -->
+                <ul class="nav nav-tabs mb-4" id="learn-tabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="notes-tab" data-bs-toggle="tab" data-bs-target="#notes-content" type="button" role="tab">
+                            <i class="bi bi-file-text"></i> Notes
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="flashcards-tab" data-bs-toggle="tab" data-bs-target="#flashcards-content" type="button" role="tab">
+                            <i class="bi bi-card-list"></i> Flashcards
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="quiz-tab" data-bs-toggle="tab" data-bs-target="#quiz-content" type="button" role="tab">
+                            <i class="bi bi-question-circle"></i> Quiz
+                        </button>
+                    </li>
+                </ul>   
+                <!-- Content corresponding to each tab -->
+                <div class="tab-content">
+                    <!-- Notes learning tab content -->
+                    <div class="tab-pane fade show active" id="notes-content" role="tabpanel">
+                        <div class="mb-3">
+                            <!-- Search input for filtering notes -->
+                            <input type="text" class="form-control" id="notes-search" placeholder="Search notes...">
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- Ordered list where notes are dynamically displayed -->
+                                <ol id="notes-list" class="notes-list"></ol>
+                                <!-- Message displayed when there are no notes or search yields no results -->
+                                <div id="notes-empty" class="text-center text-muted py-4" style="display: none;">
+                                    No notes available for this capsule.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flashcards learning tab content -->
+                    <div class="tab-pane fade" id="flashcards-content" role="tabpanel">
+                        <div id="flashcard-container">
+                            <!-- Wrapper for the interactive flashcard element -->
+                            <div class="flashcard-wrapper">
+                                <!-- Individual flashcard component with front and back sides -->
+                                <div class="flashcard" id="flashcard">
+                                    <div class="flashcard-inner">
+                                        <!-- Front side of the flashcard, displaying the question/term -->
+                                        <div class="flashcard-front">
+                                            <p id="flashcard-front-text"></p>
+                                        </div>
+                                        <!-- Back side of the flashcard, displaying the answer/definition -->
+                                        <div class="flashcard-back">
+                                            <p id="flashcard-back-text"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                      <div class="text-center mt-3">
+                                <!-- Displays current flashcard number out of total -->
+                                <p id="flashcard-counter" class="mb-3"></p>
+                                <!-- Navigation and flip controls for flashcards -->
+                                <div class="btn-group mb-3">
+                                    <button class="btn btn-secondary" id="btn-prev-flashcard">
+                                        <i class="bi bi-arrow-left"></i> Previous
+                                    </button>
+                                    <button class="btn btn-primary" id="btn-flip-flashcard">
+                                        <i class="bi bi-arrow-repeat"></i> Flip (Space)
+                                    </button>
+                                    <button class="btn btn-secondary" id="btn-next-flashcard">
+                                        Next <i class="bi bi-arrow-right"></i>
+                                    </button>
+                                </div>
+                                <!-- Buttons to mark flashcards as known or unknown for spaced repetition/tracking -->
+                                <div class="btn-group d-block">
+                                    <button class="btn btn-success" id="btn-known-flashcard">
+                                        <i class="bi bi-check-circle"></i> Known
+                                    </button>
+                                    <button class="btn btn-warning" id="btn-unknown-flashcard">
+                                        <i class="bi bi-x-circle"></i> Unknown
+                                    </button>
+            </div>
+                            </div>
+                        </div>
+                        <!-- Message displayed when there are no flashcards for the selected capsule -->
+                        <div id="flashcards-empty" class="text-center text-muted py-5" style="display: none;">
+                            <i class="bi bi-card-list" style="font-size: 3rem;"></i>
+                            <p class="mt-3">No flashcards available for this capsule.</p>
+                        </div>
+                    </div>
+
+                    <!-- Quiz learning tab content -->
+                    <div class="tab-pane fade" id="quiz-content" role="tabpanel">
+                        <!-- Main container for the interactive quiz -->
+                        <div id="quiz-container-learn">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-between">
+                                        <!-- Displays the current question number -->
+                                        <span id="quiz-question-number"></span>
+                                        <!-- Displays the current quiz score -->
+                                        <span id="quiz-score"></span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Displays the current quiz question text -->
+                                    <h5 id="quiz-question-text" class="mb-4"></h5>
+                                    <!-- Container for dynamically generated quiz answer choices -->
+                                   <div id="quiz-choices" class="d-grid gap-2"></div>
+                                    <!-- Feedback message after answering a question (correct/incorrect) -->
+                                    <div id="quiz-feedback" class="alert mt-4" style="display: none;"></div>
+                                    <!-- Explanation for the correct answer, shown after user attempt -->
+                                    <div id="quiz-explanation" class="alert alert-info mt-3" style="display: none;"></div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <!-- Button to proceed to the next quiz question -->
+                                <button class="btn btn-primary" id="btn-next-question" style="display: none;">
+                                    Next Question <i class="bi bi-arrow-right"></i>
+                                </button>
+                                <!-- Button to restart the current quiz -->
+                                <button class="btn btn-success" id="btn-restart-quiz" style="display: none;">
+                                    <i class="bi bi-arrow-clockwise"></i> Restart Quiz
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Quiz results summary displayed after the quiz is complete -->
+                        <div id="quiz-results" class="card" style="display: none;">
+                            <div class="card-body text-center">
+                                <h3>Quiz Complete!</h3>
+                                <!-- Displays the final score -->
+                                <div class="display-4 my-4" id="quiz-final-score"></div>
+                                <!-- Message based on quiz performance -->
+                                <p id="quiz-result-message"></p>
+                                <!-- Displays the best score achieved for this quiz -->
+                                <div id="quiz-best-score"></div>
+                                <!-- Button to retake the quiz -->
+                                <button class="btn btn-primary mt-3" id="btn-retake-quiz">
+                                    <i class="bi bi-arrow-clockwise"></i> Retake Quiz
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Message displayed when there are no quiz questions for the selected capsule -->
+                        <div id="quiz-empty" class="text-center text-muted py-5" style="display: none;">
+                            <i class="bi bi-question-circle" style="font-size: 3rem;"></i>
+                            <p class="mt-3">No quiz questions available for this capsule.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty state message for the Learn view, shown when no capsule is selected -->
+            <div id="learn-empty" class="text-center text-muted py-5">
+                <i class="bi bi-inbox" style="font-size: 4rem;"></i>
+                <p class="mt-3">Select a capsule from the dropdown above to start learning!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bootstrap JavaScript bundle (includes Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main application JavaScript logic, loaded as a module -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

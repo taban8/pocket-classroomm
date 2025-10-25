@@ -1,0 +1,86 @@
+{
+  "schema": "pocket-classroom/v1",
+  "meta": {
+    "title": "JavaScript Basics",
+    "subject": "Programming",
+    "level": "Beginner",
+    "description": "Essential JavaScript concepts for beginners"
+  },
+  "notes": [
+    "JavaScript is a high-level, interpreted programming language",
+    "Variables can be declared using var, let, or const",
+    "Functions are reusable blocks of code",
+    "Arrays store multiple values in a single variable",
+    "Objects store key-value pairs",
+    "Loops allow you to repeat code multiple times",
+    "Conditional statements control the flow of execution"
+  ],
+  "flashcards": [
+    {
+      "front": "What keyword is used to declare a constant variable?",
+      "back": "const"
+    },
+    {
+      "front": "What does DOM stand for?",
+      "back": "Document Object Model"
+    },
+    {
+      "front": "What method adds an element to the end of an array?",
+      "back": "push()"
+    },
+    {
+      "front": "What is the result of typeof []?",
+      "back": "object"
+    },
+    {
+      "front": "What symbol is used for strict equality comparison?",
+      "back": "==="
+    }
+  ],
+  "quiz": [
+    {
+      "question": "Which of the following is NOT a primitive data type in JavaScript?",
+      "choices": [
+        "String",
+        "Boolean",
+        "Array",
+        "Number"
+      ],
+      "correctIndex": 2,
+      "explanation": "Array is a reference type, not a primitive. Primitives include string, number, boolean, null, undefined, symbol, and bigint."
+    },
+    {
+      "question": "What is the output of: console.log(2 + '2')?",
+      "choices": [
+        "4",
+        "22",
+        "NaN",
+        "Error"
+      ],
+      "correctIndex": 1,
+      "explanation": "JavaScript converts the number 2 to a string and concatenates it with '2', resulting in '22'."
+    },
+    {
+      "question": "Which loop guarantees at least one execution?",
+      "choices": [
+        "for loop",
+        "while loop",
+        "do-while loop",
+        "for-in loop"
+      ],
+      "correctIndex": 2,
+      "explanation": "The do-while loop executes the code block once before checking the condition, guaranteeing at least one execution."
+    },
+    {
+      "question": "What does the 'let' keyword do?",
+      "choices": [
+        "Declares a constant",
+        "Declares a block-scoped variable",
+        "Declares a global variable",
+        "Declares a function"
+      ],
+      "correctIndex": 1,
+      "explanation": "The 'let' keyword declares a block-scoped variable that can be reassigned."
+    }
+  ]
+}

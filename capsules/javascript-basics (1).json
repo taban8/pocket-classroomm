@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "JavaScript Basics",
+    "subject": "Programming",
+    "level": "Intermediate",
+    "description": ""
+  },
+  "notes": [
+    "JavaScript is a high-level, interpreted programming language.",
+    "Variables can be declared using var, let, or const.",
+    "Functions are reusable blocks of code.",
+    "Arrays store multiple values in a single variable.",
+    "Objects store key-value pairs.",
+    "Loops allow you to repeat code multiple times.",
+    "Conditional statements control the flow of execution."
+  ],
+  "flashcards": [
+    {
+      "front": "What keyword is used to declare a constant variable?",
+      "back": "const"
+    },
+    {
+      "front": "What does DOM stand for?",
+      "back": "Document Object Model"
+    },
+    {
+      "front": "What is the result of typeof []?",
+      "back": "object"
+    },
+    {
+      "front": "What symbol is used for strict equality comparison?",
+      "back": "==="
+    },
+    {
+      "front": "What method adds an element to the end of an array?",
+      "back": "push( )"
+    }
+  ],
+  "quiz": [
+    {
+      "question": "Which of the following is NOT a primitive data type in JavaScript?",
+      "choices": [
+        "Array",
+        "String",
+        "Number",
+        "Boolean"
+      ],
+      "correctIndex": 0,
+      "explanation": "Array is a reference type, not a primitive."
+    },
+    {
+      "question": "What is the output of: console.log(2 + '2') ?",
+      "choices": [
+        "22",
+        "4",
+        "NaN",
+        "Error"
+      ],
+      "correctIndex": 0,
+      "explanation": "JavaScript converts the number 2 to a string and concatenates it with '2 ."
+    },
+    {
+      "question": "Which loop guarantees at least one execution ?",
+      "choices": [
+        "do-while loop",
+        "for loop",
+        "while loop",
+        "for-in loop"
+      ],
+      "correctIndex": 0,
+      "explanation": "The do-while loop executes once before checking the condition ."
+    }
+  ],
+  "id": "mh5abh9g9haqr517u6a",
+  "updatedAt": "2025-10-25T09:17:38.263Z",
+  "schema": "pocket-classroom/v1"
+}
